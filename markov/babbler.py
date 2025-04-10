@@ -228,7 +228,6 @@ class Babbler:
             return None
         return random.choices(successors, k=1)[0]
     
-
     def babble(self):
         """
         Generate a random sentence using the following algorithm:
@@ -243,11 +242,10 @@ class Babbler:
             Our example state is now: 'b c d' 
         6: Repeat from step 2.
         """
-
-        # So we need to repeat the steps so need a loop of some sort, 
-            # Problem for later as I need to solve the probl for one sentence first 
-
-        # 1 Picking ngram 
+        # 1: Pick a starter ngram
+        if not self.starters:
+            return ""
+            
         current_ngram = random.choice(self.get_starters())
         current_sentence = current_ngram
 
@@ -256,19 +254,19 @@ class Babbler:
             successor = self.get_random_successor(current_ngram)
             
             # 3: If the successor word is 'EOL', return the current sentence
-            # This also stops the loop 1111
             if successor == 'EOL' or successor is None:
                 return current_sentence
             
             # 4: Otherwise, add the word to the end of the sentence
             current_sentence += ' ' + successor
-            11
-            # 5: Also add the word to the end of the current ngram, and remove the first word from the current ngram
+            
+            # 5: Update the current ngram by removing first word and adding new word
             words = current_ngram.split()
             words.pop(0)  # Remove first word
             words.append(successor)  # Add new word at the end
             current_ngram = ' '.join(words)  # Reconstruct the n-gram
-            return current_sentence
+            
+            # 6: Repeat step 2 (continue the loop)
             
 
 # nothing to change here; read, understand, move along
